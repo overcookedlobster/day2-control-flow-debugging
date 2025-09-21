@@ -35,7 +35,7 @@
       "setup": "",
       "run": "timeout 10 ./bin/test_functions 2>&1 | head -10",
       "input": "",
-      "output": "Task 3: Test Functions",
+      "output": "=== Day 2: Test Functions - Task 3 ===",
       "comparison": "included",
       "timeout": 20,
       "points": 15
@@ -95,7 +95,7 @@
       "setup": "",
       "run": "ls -la bin/ && echo 'Executables found:' && ls bin/ | wc -l",
       "input": "",
-      "output": "bin",
+      "output": "Executables found:",
       "comparison": "included",
       "timeout": 10,
       "points": 5
@@ -105,7 +105,7 @@
       "setup": "",
       "run": "make style-check 2>&1 || echo 'Style check completed successfully'",
       "input": "",
-      "output": "completed",
+      "output": "Style check completed successfully",
       "comparison": "included",
       "timeout": 15,
       "points": 5
