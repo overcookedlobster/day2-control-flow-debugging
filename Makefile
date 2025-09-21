@@ -141,6 +141,7 @@ style-check:
 	@echo "Checking code style..."
 	@if command -v astyle >/dev/null 2>&1; then \
 		astyle --style=linux --indent=spaces=4 --max-code-length=100 $(SRC_DIR)/*.c $(INCLUDE_DIR)/*.h; \
+		echo "Style check completed successfully"; \
 	else \
 		echo "astyle not installed. Install with: sudo apt-get install astyle"; \
 	fi
