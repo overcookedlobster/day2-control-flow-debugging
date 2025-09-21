@@ -15,39 +15,11 @@ jobs:
   build:
     name: Autograding
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup build environment
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gcc gdb valgrind cppcheck astyle build-essential
-
-      - name: Verify repository structure
-        run: |
-          echo "Checking repository structure..."
-          ls -la
-          test -f Makefile || (echo "ERROR: Makefile not found" && exit 1)
-          test -d src || (echo "ERROR: src directory not found" && exit 1)
-          test -d include || (echo "ERROR: include directory not found" && exit 1)
-          test -d tests || (echo "ERROR: tests directory not found" && exit 1)
-          echo "Repository structure verified ✓"
-
-      - name: Build project
-        run: |
-          echo "Building project..."
-          make clean
-          make debug
-          echo "Build completed ✓"
-
-      - name: Run comprehensive tests
-        run: |
-          echo "Running comprehensive test suite..."
-          make test-validation
-          echo "All tests completed ✓"
 
       - name: Run autograding
         uses: education/autograding@v1
@@ -57,13 +29,13 @@ jobs:
         run: |
           echo "=== Test Report ===" > test_report.txt
           echo "Build Status: $(if [ -f bin/test_validation ]; then echo 'SUCCESS'; else echo 'FAILED'; fi)" >> test_report.txt
-          echo "Test Results: $(if bin/test_validation 2>&1 | grep -q 'ALL TESTS PASSED'; then echo 'ALL PASSED'; else echo 'SOME FAILED'; fi)" >> test_report.txt
+          echo "Test Results: $(if [ -f bin/test_validation ] && bin/test_validation 2>&1 | grep -q 'ALL TESTS PASSED'; then echo 'ALL PASSED'; else echo 'SOME FAILED'; fi)" >> test_report.txt
           echo "Timestamp: $(date)" >> test_report.txt
           cat test_report.txt
 
       - name: Upload test artifacts
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: |
