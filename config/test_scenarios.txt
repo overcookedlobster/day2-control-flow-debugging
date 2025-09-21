@@ -1,0 +1,136 @@
+# Test Scenarios Configuration for Day 2 Monitor System
+# This file defines test cases and expected outcomes for validation
+
+# Voltage Test Scenarios
+[VOLTAGE_TESTS]
+# Format: test_name, input_voltage, expected_result, description
+VOLTAGE_NORMAL_LOW      3.0     PASS    "Minimum acceptable voltage"
+VOLTAGE_NORMAL_MID      3.3     PASS    "Nominal voltage"
+VOLTAGE_NORMAL_HIGH     3.6     PASS    "Maximum acceptable voltage"
+VOLTAGE_TOO_LOW         2.8     FAIL    "Below minimum threshold"
+VOLTAGE_TOO_HIGH        3.8     FAIL    "Above maximum threshold"
+VOLTAGE_CRITICAL_LOW    2.0     FAIL    "Critically low voltage"
+VOLTAGE_CRITICAL_HIGH   4.0     FAIL    "Critically high voltage"
+VOLTAGE_ZERO            0.0     FAIL    "Zero voltage"
+VOLTAGE_NEGATIVE        -1.0    FAIL    "Negative voltage"
+
+# Temperature Test Scenarios
+[TEMPERATURE_TESTS]
+# Format: test_name, input_temp, expected_result, description
+TEMP_NORMAL_COLD        10.0    PASS    "Cold but acceptable"
+TEMP_NORMAL_ROOM        25.0    PASS    "Room temperature"
+TEMP_NORMAL_WARM        50.0    PASS    "Warm but acceptable"
+TEMP_WARNING_LOW        76.0    WARN    "Just above warning threshold"
+TEMP_WARNING_HIGH       84.0    WARN    "Near critical threshold"
+TEMP_CRITICAL           86.0    FAIL    "Above critical threshold"
+TEMP_EXTREME            100.0   FAIL    "Extremely high temperature"
+TEMP_SUBZERO            -10.0   PASS    "Below zero but valid"
+TEMP_INVALID_LOW        -50.0   FAIL    "Invalid sensor reading"
+TEMP_INVALID_HIGH       200.0   FAIL    "Invalid sensor reading"
+
+# Current Test Scenarios
+[CURRENT_TESTS]
+# Format: test_name, input_current, expected_result, description
+CURRENT_NORMAL_LOW      0.05    PASS    "Minimum acceptable current"
+CURRENT_NORMAL_MID      0.5     PASS    "Nominal current"
+CURRENT_NORMAL_HIGH     2.0     PASS    "Maximum acceptable current"
+CURRENT_TOO_LOW         0.01    FAIL    "Below minimum threshold"
+CURRENT_TOO_HIGH        2.5     FAIL    "Above maximum threshold"
+CURRENT_ZERO            0.0     FAIL    "No current flow"
+CURRENT_NEGATIVE        -0.1    FAIL    "Negative current"
+CURRENT_OVERLOAD        5.0     FAIL    "Severe overload"
+
+# System Status Test Scenarios
+[SYSTEM_STATUS_TESTS]
+# Format: test_name, voltage, temperature, current, expected_status, description
+STATUS_ALL_NORMAL       3.3     25.0    0.5     NORMAL      "All parameters normal"
+STATUS_TEMP_WARNING     3.3     80.0    0.5     WARNING     "Temperature warning"
+STATUS_TEMP_CRITICAL    3.3     90.0    0.5     CRITICAL    "Temperature critical"
+STATUS_VOLTAGE_LOW      2.8     25.0    0.5     VOLT_ERROR  "Voltage too low"
+STATUS_VOLTAGE_HIGH     3.8     25.0    0.5     VOLT_ERROR  "Voltage too high"
+STATUS_CURRENT_HIGH     3.3     25.0    2.5     WARNING     "Current too high"
+STATUS_MULTIPLE_ERRORS  2.8     90.0    2.5     CRITICAL    "Multiple critical errors"
+
+# Register Validation Test Scenarios
+[REGISTER_TESTS]
+# Format: test_name, address, value, min, max, expected_result, description
+REG_VALID_MIN           0x40000000  0x10000000  0x10000000  0x20000000  PASS    "Value at minimum"
+REG_VALID_MID           0x40000000  0x18000000  0x10000000  0x20000000  PASS    "Value in middle"
+REG_VALID_MAX           0x40000000  0x20000000  0x10000000  0x20000000  PASS    "Value at maximum"
+REG_BELOW_MIN           0x40000000  0x08000000  0x10000000  0x20000000  FAIL    "Value below minimum"
+REG_ABOVE_MAX           0x40000000  0x28000000  0x10000000  0x20000000  FAIL    "Value above maximum"
+REG_ZERO_VALUE          0x40000000  0x00000000  0x10000000  0x20000000  FAIL    "Zero value"
+REG_MAX_VALUE           0x40000000  0xFFFFFFFF  0x10000000  0x20000000  FAIL    "Maximum possible value"
+
+# Error Handling Test Scenarios
+[ERROR_HANDLING_TESTS]
+# Format: test_name, error_code, expected_action, description
+ERROR_VOLTAGE_LOW       1   "Adjust power supply"       "Low voltage recovery"
+ERROR_VOLTAGE_HIGH      2   "Reduce supply voltage"     "High voltage recovery"
+ERROR_TEMP_HIGH         3   "Activate cooling"          "Temperature recovery"
+ERROR_CURRENT_LOW       4   "Check load connections"    "Low current recovery"
+ERROR_CURRENT_HIGH      5   "Check for short circuits"  "High current recovery"
+ERROR_COMMUNICATION     6   "Reset interface"           "Communication recovery"
+ERROR_TIMEOUT           7   "Increase timeout"          "Timeout recovery"
+ERROR_INVALID_DATA      8   "Request retransmission"    "Data recovery"
+ERROR_UNKNOWN           99  "Log for analysis"          "Unknown error handling"
+
+# Loop Performance Test Scenarios
+[LOOP_TESTS]
+# Format: test_name, iterations, expected_time_ms, description
+LOOP_SMALL              10      100     "Small loop performance"
+LOOP_MEDIUM             100     500     "Medium loop performance"
+LOOP_LARGE              1000    2000    "Large loop performance"
+LOOP_NESTED_SMALL       10x10   200     "Small nested loop"
+LOOP_NESTED_MEDIUM      50x50   1000    "Medium nested loop"
+
+# Multi-chip Test Scenarios
+[MULTI_CHIP_TESTS]
+# Format: test_name, num_chips, expected_registers, description
+MULTI_CHIP_SMALL        2       8       "Two chip system"
+MULTI_CHIP_MEDIUM       4       16      "Four chip system"
+MULTI_CHIP_LARGE        8       32      "Eight chip system"
+MULTI_CHIP_PRIORITY     4       16      "Priority-based monitoring"
+
+# Error Recovery Test Scenarios
+[RECOVERY_TESTS]
+# Format: test_name, error_type, max_retries, expected_success, description
+RECOVERY_VOLTAGE        VOLTAGE_LOW     3   TRUE    "Voltage recovery test"
+RECOVERY_TEMPERATURE    TEMP_HIGH       3   TRUE    "Temperature recovery test"
+RECOVERY_COMMUNICATION  COMM_FAIL       3   TRUE    "Communication recovery test"
+RECOVERY_TIMEOUT        TIMEOUT         3   TRUE    "Timeout recovery test"
+RECOVERY_IMPOSSIBLE     HARDWARE_FAIL   3   FALSE   "Unrecoverable error test"
+
+# Boundary Condition Tests
+[BOUNDARY_TESTS]
+# Format: test_name, parameter, boundary_value, expected_result, description
+BOUNDARY_VOLTAGE_MIN    voltage     3.0     PASS    "Voltage minimum boundary"
+BOUNDARY_VOLTAGE_MAX    voltage     3.6     PASS    "Voltage maximum boundary"
+BOUNDARY_TEMP_WARNING   temperature 75.0    PASS    "Temperature warning boundary"
+BOUNDARY_TEMP_CRITICAL  temperature 85.0    WARN    "Temperature critical boundary"
+BOUNDARY_CURRENT_MIN    current     0.05    PASS    "Current minimum boundary"
+BOUNDARY_CURRENT_MAX    current     2.0     PASS    "Current maximum boundary"
+
+# Stress Test Scenarios
+[STRESS_TESTS]
+# Format: test_name, duration_seconds, operations_per_second, description
+STRESS_SHORT            10      100     "Short duration stress test"
+STRESS_MEDIUM           60      50      "Medium duration stress test"
+STRESS_LONG             300     20      "Long duration stress test"
+STRESS_HIGH_FREQUENCY   5       1000    "High frequency operations"
+
+# Integration Test Scenarios
+[INTEGRATION_TESTS]
+# Format: test_name, components, expected_result, description
+INTEGRATION_BASIC       "voltage,temp,current"      PASS    "Basic integration test"
+INTEGRATION_REGISTERS   "registers,validation"      PASS    "Register integration test"
+INTEGRATION_ERRORS      "errors,recovery"           PASS    "Error handling integration"
+INTEGRATION_FULL        "all_components"            PASS    "Full system integration"
+
+# Usage Notes:
+# 1. Test scenarios are grouped by functionality
+# 2. Each test includes expected results for validation
+# 3. Descriptions help understand test purpose
+# 4. Values should match the constants in monitor.h
+# 5. Tests cover normal, boundary, and error conditions
+

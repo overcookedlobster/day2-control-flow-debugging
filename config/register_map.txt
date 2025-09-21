@@ -1,0 +1,39 @@
+# Register Map Configuration for Day 2 Monitor System
+# This file defines the register addresses and expected values for the monitoring system
+
+# Control Registers (0x40000000 - 0x4000000F)
+CTRL_REG        0x40000000  0x10000000  0x20000000  # Control register
+STATUS_REG      0x40000004  0x10000000  0x20000000  # Status register
+CONFIG_REG      0x40000008  0x10000000  0x20000000  # Configuration register
+MODE_REG        0x4000000C  0x10000000  0x20000000  # Mode register
+
+# Data Registers (0x40000010 - 0x4000001F)
+DATA_REG_0      0x40000010  0x12000000  0x18000000  # Data register 0
+DATA_REG_1      0x40000014  0x12000000  0x18000000  # Data register 1
+DATA_REG_2      0x40000018  0x12000000  0x18000000  # Data register 2
+DATA_REG_3      0x4000001C  0x12000000  0x18000000  # Data register 3
+
+# Sensor Registers (0x40000020 - 0x4000002F)
+VOLTAGE_REG     0x40000020  0x0C000000  0x14000000  # Voltage sensor
+TEMP_REG        0x40000024  0x0A000000  0x16000000  # Temperature sensor
+CURRENT_REG     0x40000028  0x08000000  0x18000000  # Current sensor
+POWER_REG       0x4000002C  0x0E000000  0x1A000000  # Power sensor
+
+# Error Registers (0x40000030 - 0x4000003F)
+ERROR_STATUS    0x40000030  0x00000000  0x0000FFFF  # Error status
+ERROR_COUNT     0x40000034  0x00000000  0x000000FF  # Error counter
+ERROR_LOG       0x40000038  0x00000000  0xFFFFFFFF  # Error log
+ERROR_MASK      0x4000003C  0x00000000  0x0000FFFF  # Error mask
+
+# Format: NAME ADDRESS MIN_VALUE MAX_VALUE
+# - NAME: Register identifier
+# - ADDRESS: 32-bit hexadecimal address
+# - MIN_VALUE: Minimum expected value (32-bit hex)
+# - MAX_VALUE: Maximum expected value (32-bit hex)
+
+# Usage Notes:
+# 1. All addresses are 32-bit aligned (multiples of 4)
+# 2. Address ranges are reserved for future expansion
+# 3. Min/max values define valid register content ranges
+# 4. Values outside ranges indicate hardware faults
+

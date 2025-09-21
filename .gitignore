@@ -1,0 +1,58 @@
+# C/C++ build artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.so
+*.dylib
+*.dll
+
+# Build directories
+bin/
+build/
+debug/
+release/
+
+# Compiler generated files
+*.d
+*.dep
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.orig
+*.bak
+*.backup
+
+# Log files
+*.log
+
+# Core dumps
+core
+core.*
+
+# Valgrind output
+vgcore.*
+
+# GDB history
+.gdb_history
+
+# Temporary files
+*.tmp
+*.temp
+
