@@ -1,343 +1,220 @@
 /**
  * @file test_functions.c
- * @brief Day 2 Task 3: Modular Test Functions (50 minutes)
+ * @brief Day 2 Task 3: Modular Functions (60 minutes)
  *
- * This file implements modular functions for different validation types.
- * Students will learn to create reusable, well-organized functions with
- * proper parameter handling and return values.
+ * This file focuses on creating modular, reusable functions for register testing.
+ * Students will learn function design, parameter passing, and return values.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdbool.h>
-#include "../include/monitor.h"
+#include <string.h>
+#include "monitor.h"
 
 /**
- * @brief Test voltage levels with comprehensive validation
- * @param voltage Input voltage to test
- * @return true if voltage is acceptable, false otherwise
+ * Task 3: Modular Functions (60 minutes)
+ *
+ * TODO: Implement modular test functions for register validation
+ *
+ * Learning objectives:
+ * - Design functions with clear single responsibilities
+ * - Practice parameter passing and return values
+ * - Implement function composition and reusability
+ * - Master function documentation and interfaces
  */
-bool test_voltage_levels(float voltage) {
-    printf("=== Voltage Level Test ===\n");
-    printf("Input voltage: %.2fV\n", voltage);
 
-    // Check for invalid input
-    if (voltage < 0.0f || voltage > 10.0f) {
-        printf("FAIL: Invalid voltage reading (%.2fV)\n", voltage);
-        return false;
-    }
-
-    // Test minimum threshold
-    if (voltage < MIN_VOLTAGE) {
-        printf("FAIL: Voltage below minimum (%.2fV < %.2fV)\n", voltage, MIN_VOLTAGE);
-        return false;
-    }
-
-    // Test maximum threshold
-    if (voltage > MAX_VOLTAGE) {
-        printf("FAIL: Voltage above maximum (%.2fV > %.2fV)\n", voltage, MAX_VOLTAGE);
-        return false;
-    }
-
-    // Test nominal voltage (±5% tolerance)
-    float tolerance = NOMINAL_VOLTAGE * 0.05f;
-    float min_nominal = NOMINAL_VOLTAGE - tolerance;
-    float max_nominal = NOMINAL_VOLTAGE + tolerance;
-
-    if (voltage >= min_nominal && voltage <= max_nominal) {
-        printf("PASS: Voltage within nominal range (%.2fV ± %.2fV)\n", NOMINAL_VOLTAGE, tolerance);
-    } else {
-        printf("WARNING: Voltage outside nominal range but within limits\n");
-    }
-
-    printf("PASS: Voltage test successful\n");
-    return true;
+/**
+ * @brief Test voltage level validation
+ * @param voltage Voltage value to test
+ * @return true if test passes, false otherwise
+ *
+ * TODO: Implement voltage level test function
+ * - Print test header "=== Voltage Level Test ==="
+ * - Print input voltage with format "Input voltage: %.2fV"
+ * - Call validate_voltage_range() function
+ * - Print result based on validation outcome
+ * - Return the validation result
+ */
+bool test_voltage_level(float voltage) {
+    // TODO: Your implementation here
+    // Hint: Use printf for output formatting and call validation function
+    (void)voltage; // Suppress unused parameter warning
+    return false; // Replace this line
 }
 
 /**
- * @brief Test current consumption levels
- * @param current Input current to test
- * @return true if current is acceptable, false otherwise
+ * @brief Test temperature monitoring functionality
+ * @param temperature Temperature value to test
+ * @return true if test passes, false otherwise
+ *
+ * TODO: Implement temperature test function
+ * - Print test header "=== Temperature Test ==="
+ * - Print input temperature with format "Input temperature: %.1f°C"
+ * - Call validate_temperature_range() function
+ * - Print result based on validation outcome
+ * - Return the validation result
  */
-bool test_current_consumption(float current) {
-    printf("=== Current Consumption Test ===\n");
-    printf("Input current: %.3fA\n", current);
-
-    // Validate input - check for negative current
-    if (current < 0.0f) {
-        printf("FAIL: Negative current reading (%.3fA)\n", current);
-        return false;
-    }
-
-    // Check minimum current threshold
-    if (current < MIN_CURRENT) {
-        printf("FAIL: Current below minimum (%.3fA < %.3fA)\n", current, MIN_CURRENT);
-        return false;
-    }
-
-    // Check maximum current threshold
-    if (current > MAX_CURRENT) {
-        printf("FAIL: Current above maximum (%.3fA > %.3fA)\n", current, MAX_CURRENT);
-        return false;
-    }
-
-    // Classify current consumption
-    float tolerance = NOMINAL_CURRENT * 0.1f; // ±10% tolerance
-    float min_nominal = NOMINAL_CURRENT - tolerance;
-    float max_nominal = NOMINAL_CURRENT + tolerance;
-
-    if (current >= min_nominal && current <= max_nominal) {
-        printf("PASS: Current within nominal range (%.3fA ± %.3fA)\n", NOMINAL_CURRENT, tolerance);
-    } else if (current < min_nominal) {
-        printf("WARNING: Current consumption low but within limits\n");
-    } else {
-        printf("WARNING: Current consumption high but within limits\n");
-    }
-
-    printf("PASS: Current consumption test successful\n");
-    return true;
+bool test_temperature_monitoring(float temperature) {
+    // TODO: Your implementation here
+    // Hint: Similar structure to voltage test but for temperature
+    (void)temperature; // Suppress unused parameter warning
+    return false; // Replace this line
 }
 
 /**
- * @brief Test temperature range with thermal management
- * @param temperature Input temperature to test
- * @return true if temperature is safe, false otherwise
+ * @brief Test current measurement validation
+ * @param current Current value to test
+ * @return true if test passes, false otherwise
+ *
+ * TODO: Implement current measurement test function
+ * - Print test header "=== Current Measurement Test ==="
+ * - Print input current with format "Input current: %.3fA"
+ * - Validate current is within MIN_CURRENT to MAX_CURRENT range
+ * - Print appropriate success/failure message
+ * - Return the validation result
  */
-bool test_temperature_range(float temperature) {
-    printf("=== Temperature Range Test ===\n");
-    printf("Input temperature: %.1f°C\n", temperature);
-
-    // Validate input (reasonable temperature range)
-    if (temperature < -40.0f || temperature > 150.0f) {
-        printf("FAIL: Temperature reading out of sensor range (%.1f°C)\n", temperature);
-        return false;
-    }
-
-    // Check critical threshold first (highest priority)
-    if (temperature > TEMP_CRITICAL) {
-        printf("FAIL: Temperature critical - immediate shutdown required (%.1f°C > %.1f°C)\n",
-               temperature, TEMP_CRITICAL);
-        printf("RECOMMENDATION: Emergency thermal protection activated\n");
-        return false;
-    }
-
-    // Check warning threshold
-    if (temperature > TEMP_WARNING) {
-        printf("WARNING: Temperature elevated - monitoring required (%.1f°C > %.1f°C)\n",
-               temperature, TEMP_WARNING);
-        printf("RECOMMENDATION: Increase cooling, reduce load\n");
-        return true; // Still passing but needs attention
-    }
-
-    // Normal operating temperature
-    printf("PASS: Temperature in normal operating range (%.1f°C)\n", temperature);
-    return true;
+bool test_current_measurement(float current) {
+    // TODO: Your implementation here
+    // Hint: Check current against MIN_CURRENT and MAX_CURRENT constants
+    (void)current; // Suppress unused parameter warning
+    return false; // Replace this line
 }
 
 /**
- * @brief Validate register value against expected range
- * @param address Register address
- * @param value Current register value
- * @param min Minimum expected value
- * @param max Maximum expected value
- * @return true if register is valid, false otherwise
+ * @brief Test register read/write operations
+ * @param address Register address to test
+ * @param test_value Value to write and verify
+ * @return true if test passes, false otherwise
+ *
+ * TODO: Implement register read/write test function
+ * - Print test header "=== Register R/W Test ==="
+ * - Print register address and test value
+ * - Write test_value to register using write_register()
+ * - Read back value using read_register()
+ * - Compare written and read values
+ * - Print success/failure message
+ * - Return true if values match, false otherwise
  */
-bool validate_register(uint32_t address, uint32_t value, uint32_t min, uint32_t max) {
-    printf("Validating register 0x%08X\n", address);
-    printf("  Current value: 0x%08X\n", value);
-    printf("  Expected range: 0x%08X to 0x%08X\n", min, max);
-
-    if (value < min) {
-        printf("  FAIL: Value below minimum (0x%08X < 0x%08X)\n", value, min);
-        return false;
-    }
-
-    if (value > max) {
-        printf("  FAIL: Value above maximum (0x%08X > 0x%08X)\n", value, max);
-        return false;
-    }
-
-    printf("  PASS: Register value within expected range\n");
-    return true;
+bool test_register_readwrite(uint32_t address, uint32_t test_value) {
+    // TODO: Your implementation here
+    // Hint: Use write_register() and read_register() functions
+    (void)address; (void)test_value; // Suppress unused parameter warnings
+    return false; // Replace this line
 }
 
 /**
- * @brief Run comprehensive test suite on monitor system
- * @param system Pointer to monitor system structure
- * @return Number of tests passed
+ * @brief Test system status calculation
+ * @param voltage System voltage
+ * @param temperature System temperature
+ * @param current System current
+ * @return true if test passes, false otherwise
+ *
+ * TODO: Implement system status test function
+ * - Print test header "=== System Status Test ==="
+ * - Print all input parameters
+ * - Call determine_system_status() function
+ * - Print the returned status value
+ * - Return true if status is reasonable, false otherwise
  */
-int run_comprehensive_test(monitor_system_t *system) {
-    if (system == NULL) {
-        printf("ERROR: Cannot run tests - system pointer is NULL\n");
-        return 0;
-    }
-
-    printf("=== Comprehensive Test Suite ===\n");
-    printf("System Status:\n");
-    printf("  - Voltage: %.2fV\n", system->voltage);
-    printf("  - Temperature: %.1f°C\n", system->temperature);
-    printf("  - Current: %.3fA\n", system->current);
-    printf("  - Registers: %d\n", system->num_registers);
-
-    int tests_passed = 0;
-    int total_tests = 0;
-
-    // Test 1: Voltage levels
-    total_tests++;
-    printf("\nTest 1: Voltage Level Test\n");
-    if (test_voltage_levels(system->voltage)) {
-        tests_passed++;
-        printf("Result: PASS\n");
-    } else {
-        printf("Result: FAIL\n");
-    }
-
-    // Test 2: Current consumption
-    total_tests++;
-    printf("\nTest 2: Current Consumption Test\n");
-    if (test_current_consumption(system->current)) {
-        tests_passed++;
-        printf("Result: PASS\n");
-    } else {
-        printf("Result: FAIL\n");
-    }
-
-    // Test 3: Temperature range
-    total_tests++;
-    printf("\nTest 3: Temperature Range Test\n");
-    if (test_temperature_range(system->temperature)) {
-        tests_passed++;
-        printf("Result: PASS\n");
-    } else {
-        printf("Result: FAIL\n");
-    }
-
-    // Test 4: Register validation
-    printf("\nTest 4: Register Validation Tests\n");
-    for (int i = 0; i < system->num_registers; i++) {
-        total_tests++;
-        printf("  Register %d (%s): ", i, system->registers[i].name);
-        if (validate_register(system->registers[i].address,
-                             system->registers[i].value,
-                             system->registers[i].expected_min,
-                             system->registers[i].expected_max)) {
-            tests_passed++;
-            printf("PASS\n");
-        } else {
-            printf("FAIL\n");
-        }
-    }
-
-    // Generate test report
-    printf("\n=== Test Summary ===\n");
-    printf("Total tests: %d\n", total_tests);
-    printf("Tests passed: %d\n", tests_passed);
-    printf("Tests failed: %d\n", total_tests - tests_passed);
-    printf("Success rate: %.1f%%\n", (float)tests_passed / total_tests * 100.0f);
-
-    if (tests_passed == total_tests) {
-        printf("Overall result: ALL TESTS PASSED\n");
-    } else if (tests_passed >= total_tests * 0.8f) {
-        printf("Overall result: MOSTLY PASSED (some issues detected)\n");
-    } else {
-        printf("Overall result: MULTIPLE FAILURES (system needs attention)\n");
-    }
-
-    return tests_passed;
+bool test_system_status(float voltage, float temperature, float current) {
+    // TODO: Your implementation here
+    // Hint: Call determine_system_status() and validate the result
+    (void)voltage; (void)temperature; (void)current; // Suppress unused parameter warnings
+    return false; // Replace this line
 }
 
 /**
- * @brief Demonstrate function parameter passing and return values
+ * @brief Run comprehensive test suite
+ * @return Number of tests that passed
+ *
+ * TODO: Implement comprehensive test runner
+ * - Run all individual test functions with various test values
+ * - Count how many tests pass
+ * - Print summary of test results
+ * - Return total number of passed tests
  */
-void demonstrate_function_concepts(void) {
-    printf("=== Function Concepts Demonstration ===\n");
-
-    // Parameter passing by value
-    printf("\n1. Parameter passing by value:\n");
-    float test_voltage = 3.3f;
-    printf("Original voltage: %.2fV\n", test_voltage);
-    bool result = test_voltage_levels(test_voltage);
-    printf("After function call: %.2fV (unchanged)\n", test_voltage);
-    printf("Function returned: %s\n", result ? "true" : "false");
-
-    // Parameter passing by pointer (reference)
-    printf("\n2. Parameter passing by pointer:\n");
-    monitor_system_t test_system;
-    init_monitor_system(&test_system);
-    printf("System address: %p\n", (void*)&test_system);
-    int passed_tests = run_comprehensive_test(&test_system);
-    printf("Function can modify system through pointer\n");
-    printf("Tests passed: %d\n", passed_tests);
-
-    // Function composition
-    printf("\n3. Function composition:\n");
-    printf("Calling multiple functions in sequence:\n");
-    bool v_ok = test_voltage_levels(3.3f);
-    bool c_ok = test_current_consumption(0.5f);
-    bool t_ok = test_temperature_range(25.0f);
-    bool all_ok = v_ok && c_ok && t_ok;
-    printf("All tests passed: %s\n", all_ok ? "YES" : "NO");
+int run_comprehensive_tests(void) {
+    // TODO: Your implementation here
+    // Hint: Call each test function and count successes
+    return 0; // Replace this line
 }
 
 /**
- * @brief Main function demonstrating Task 3 (only when compiled as standalone)
+ * @brief Test error handling functions
+ *
+ * TODO: Implement error handling test
+ * - Test different error codes with handle_system_error()
+ * - Verify error messages are appropriate
+ * - Test error recovery mechanisms
  */
+void test_error_functions(void) {
+    // TODO: Your implementation here
+    // Hint: Test various error_code_t values
+}
+
+/**
+ * @brief Test loop-based monitoring functions
+ *
+ * TODO: Implement monitoring test
+ * - Test scan_registers() function
+ * - Test continuous_monitor() function
+ * - Verify loop behavior and return values
+ */
+void test_monitoring_functions(void) {
+    // TODO: Your implementation here
+    // Hint: Call monitoring functions with test parameters
+}
+
 #ifdef TEST_FUNCTIONS_STANDALONE
+/**
+ * Main function for standalone testing of modular functions
+ */
 int main(void) {
     printf("=== Day 2: Test Functions - Task 3 ===\n\n");
 
-    // Demonstrate individual test functions
     printf("--- Individual Test Function Demonstrations ---\n");
 
-    // Test voltage function
+    // Test voltage level function
     printf("1. Voltage Level Testing:\n");
-    float test_voltages[] = {2.8f, 3.3f, 3.8f};
-    for (int i = 0; i < 3; i++) {
-        bool result = test_voltage_levels(test_voltages[i]);
-        printf("   %.1fV: %s\n\n", test_voltages[i], result ? "PASS" : "FAIL");
-    }
+    bool voltage_result = test_voltage_level(2.8f);
+    printf("   2.8V: %s\n\n", voltage_result ? "PASS" : "FAIL");
 
-    // Test current function
-    printf("2. Current Consumption Testing:\n");
-    float test_currents[] = {0.1f, 0.5f, 1.8f};
-    for (int i = 0; i < 3; i++) {
-        bool result = test_current_consumption(test_currents[i]);
-        printf("   %.1fA: %s\n\n", test_currents[i], result ? "PASS" : "FAIL");
-    }
+    // Test temperature monitoring function
+    printf("2. Temperature Monitoring Testing:\n");
+    bool temp_result = test_temperature_monitoring(80.0f);
+    printf("   80.0°C: %s\n\n", temp_result ? "PASS" : "FAIL");
 
-    // Test temperature function
-    printf("3. Temperature Range Testing:\n");
-    float test_temps[] = {25.0f, 80.0f, 90.0f};
-    for (int i = 0; i < 3; i++) {
-        bool result = test_temperature_range(test_temps[i]);
-        printf("   %.1f°C: %s\n\n", test_temps[i], result ? "PASS" : "FAIL");
-    }
+    // Test current measurement function
+    printf("3. Current Measurement Testing:\n");
+    bool current_result = test_current_measurement(0.5f);
+    printf("   0.5A: %s\n\n", current_result ? "PASS" : "FAIL");
 
-    // Test register validation
-    printf("4. Register Validation Testing:\n");
-    bool reg_result = validate_register(0x40000000, 0x12345678, 0x10000000, 0x20000000);
-    printf("   Register test: %s\n\n", reg_result ? "PASS" : "FAIL");
+    // Test register read/write function
+    printf("4. Register Read/Write Testing:\n");
+    bool rw_result = test_register_readwrite(0x40000000, 0x12345678);
+    printf("   Register R/W: %s\n\n", rw_result ? "PASS" : "FAIL");
 
-    // Comprehensive test suite
+    // Test system status function
+    printf("5. System Status Testing:\n");
+    bool status_result = test_system_status(3.3f, 25.0f, 0.5f);
+    printf("   System Status: %s\n\n", status_result ? "PASS" : "FAIL");
+
+    // Run comprehensive test suite
     printf("--- Comprehensive Test Suite ---\n");
-    monitor_system_t test_system;
-    init_monitor_system(&test_system);
+    int passed_tests = run_comprehensive_tests();
+    printf("Comprehensive tests passed: %d\n\n", passed_tests);
 
-    // Set test values
-    test_system.voltage = 3.3f;
-    test_system.temperature = 25.0f;
-    test_system.current = 0.5f;
+    // Test error handling functions
+    printf("--- Error Handling Tests ---\n");
+    test_error_functions();
 
-    int passed_tests = run_comprehensive_test(&test_system);
-    printf("Comprehensive test result: %d tests passed\n\n", passed_tests);
+    // Test monitoring functions
+    printf("--- Monitoring Function Tests ---\n");
+    test_monitoring_functions();
 
-    // Function concepts demonstration
-    printf("--- Function Concepts Demonstration ---\n");
-    demonstrate_function_concepts();
-
-    printf("\n=== Task 3 Complete ===\n");
-    printf("Next: Implement debug_practice.c for Task 4\n");
+    printf("=== Task 3: Modular Functions Complete ===\n");
+    printf("Next: Practice debugging with Task 4\n");
 
     return 0;
 }

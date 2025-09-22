@@ -42,6 +42,7 @@
 bool validate_voltage_range(float voltage) {
     // TODO: Your implementation here
     // Hint: Use if-else statements to check MIN_VOLTAGE and MAX_VOLTAGE constants
+    (void)voltage; // Suppress unused parameter warning
     return false; // Replace this line
 }
 
@@ -59,6 +60,7 @@ bool validate_voltage_range(float voltage) {
 bool validate_temperature_range(float temperature) {
     // TODO: Your implementation here
     // Hint: Use nested if-else to handle critical, warning, and normal ranges
+    (void)temperature; // Suppress unused parameter warning
     return false; // Replace this line
 }
 
@@ -77,10 +79,11 @@ bool validate_temperature_range(float temperature) {
  * - Return SYSTEM_NORMAL if all parameters are good
  * - Print status determination message with all three values
  */
-SystemStatus determine_system_status(float voltage, float temperature, float current) {
+system_status_t determine_system_status(float voltage, float temperature, float current) {
     // TODO: Your implementation here
     // Hint: Call the validation functions and use logical operators
-    return SYSTEM_CRITICAL; // Replace this line
+    (void)voltage; (void)temperature; (void)current; // Suppress unused parameter warnings
+    return STATUS_CRITICAL; // Replace this line
 }
 
 /**
@@ -110,6 +113,7 @@ SystemStatus determine_system_status(float voltage, float temperature, float cur
 int scan_registers(int num_registers) {
     // TODO: Your implementation here
     // Hint: Use for loop with register validation
+    (void)num_registers; // Suppress unused parameter warning
     return 0; // Replace this line
 }
 
@@ -128,6 +132,7 @@ int scan_registers(int num_registers) {
 int continuous_monitor(int duration_seconds) {
     // TODO: Your implementation here
     // Hint: Use while loop with time tracking
+    (void)duration_seconds; // Suppress unused parameter warning
     return 0; // Replace this line
 }
 
@@ -156,9 +161,10 @@ int continuous_monitor(int duration_seconds) {
  * - Attempt recovery using recover_from_error()
  * - Return true if recovery successful, false otherwise
  */
-bool handle_system_error(ErrorCode error_code) {
+bool handle_system_error(error_code_t error_code) {
     // TODO: Your implementation here
     // Hint: Use switch statement with cases for each error type
+    (void)error_code; // Suppress unused parameter warning
     return false; // Replace this line
 }
 
@@ -173,6 +179,91 @@ bool handle_system_error(ErrorCode error_code) {
 void test_error_handling(void) {
     // TODO: Your implementation here
     // Hint: Test different ErrorCode values
+}
+
+// Additional stub functions needed for compilation
+bool validate_current_range(float current) {
+    // TODO: Implement current validation
+    (void)current;
+    return false;
+}
+
+bool check_critical_conditions(const monitor_system_t *system) {
+    // TODO: Implement critical condition checking
+    (void)system;
+    return false;
+}
+
+int scan_all_registers(monitor_system_t *system) {
+    // TODO: Implement register scanning
+    (void)system;
+    return 0;
+}
+
+void continuous_monitoring_loop(monitor_system_t *system, int duration_seconds) {
+    // TODO: Implement continuous monitoring
+    (void)system;
+    (void)duration_seconds;
+}
+
+int count_valid_registers(const monitor_system_t *system) {
+    // TODO: Implement register counting
+    (void)system;
+    return 0;
+}
+
+void update_all_registers(monitor_system_t *system) {
+    // TODO: Implement register updates
+    (void)system;
+}
+
+void handle_error(error_code_t error_code) {
+    // TODO: Implement error handling
+    (void)error_code;
+}
+
+const char* get_error_message(error_code_t error_code) {
+    // TODO: Implement error message lookup
+    (void)error_code;
+    return "Unknown error";
+}
+
+bool attempt_error_recovery(monitor_system_t *system, error_code_t error_code) {
+    // TODO: Implement error recovery
+    (void)system;
+    (void)error_code;
+    return false;
+}
+
+// Additional function stubs needed by test framework
+bool test_voltage_levels(float voltage) {
+    // TODO: Implement voltage level testing
+    (void)voltage;
+    return false;
+}
+
+bool test_current_consumption(float current) {
+    // TODO: Implement current consumption testing
+    (void)current;
+    return false;
+}
+
+bool test_temperature_range(float temperature) {
+    // TODO: Implement temperature range testing
+    (void)temperature;
+    return false;
+}
+
+bool validate_register(uint32_t address, uint32_t value, uint32_t min, uint32_t max) {
+    // TODO: Implement register validation
+    (void)address; (void)value; (void)min; (void)max;
+    return false;
+}
+
+int run_comprehensive_test(monitor_system_t *system) {
+    // TODO: Implement comprehensive testing
+    (void)system;
+    return 0;
 }
 
 #ifdef REGISTER_MONITOR_STANDALONE
@@ -202,7 +293,7 @@ int main(void) {
     }
 
     printf("\n3. Testing system status determination:\n");
-    SystemStatus status = determine_system_status(3.3f, 25.0f, 0.5f);
+    system_status_t status = determine_system_status(3.3f, 25.0f, 0.5f);
     printf("   System status: %d\n", status);
 
     // Task 2: Loop-Based Testing
