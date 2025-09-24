@@ -415,3 +415,4 @@ The control flow and debugging skills you learn today are fundamental to all pro
 **Remember:** Good debugging skills will save you hours of frustration. Take time to master GDB - it's one of the most valuable tools in a C programmer's toolkit!
 
 // Trigger autograding test - Tue Sep 23 23:41:16 +08 2025
+// Test clean 0-100 scoring - Wed Sep 24 16:02:55 +08 2025
