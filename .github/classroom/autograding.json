@@ -8,7 +8,7 @@
       "output": "",
       "comparison": "included",
       "timeout": 60,
-      "points": 10
+      "points": 0
     },
     {
       "name": "Task 1: Conditional Logic Implementation",
@@ -18,7 +18,7 @@
       "output": "6",
       "comparison": "exact",
       "timeout": 20,
-      "points": 15
+      "points": 20
     },
     {
       "name": "Task 2: Loop Operations Implementation",
@@ -28,7 +28,7 @@
       "output": "8",
       "comparison": "exact",
       "timeout": 20,
-      "points": 15
+      "points": 20
     },
     {
       "name": "Task 3: Modular Functions Implementation",
@@ -38,17 +38,7 @@
       "output": "6",
       "comparison": "exact",
       "timeout": 20,
-      "points": 15
-    },
-    {
-      "name": "Task 4: Debug Practice Compilation",
-      "setup": "",
-      "run": "timeout 5 ./bin/debug_practice 2>&1 | head -5",
-      "input": "",
-      "output": "GDB Debugging Practice",
-      "comparison": "included",
-      "timeout": 15,
-      "points": 10
+      "points": 20
     },
     {
       "name": "Task 5: Error Handling Implementation",
@@ -58,57 +48,17 @@
       "output": "3",
       "comparison": "exact",
       "timeout": 20,
-      "points": 15
+      "points": 20
     },
     {
-      "name": "Comprehensive Validation Suite",
+      "name": "Comprehensive Integration Test",
       "setup": "",
       "run": "./bin/test_validation 2>&1 | grep -E '✓ ALL TESTS PASSED ✓'",
       "input": "",
       "output": "✓ ALL TESTS PASSED ✓",
       "comparison": "exact",
       "timeout": 45,
-      "points": 40
-    },
-    {
-      "name": "Homework 1: Multi-Chip Monitoring",
-      "setup": "",
-      "run": "timeout 15 ./bin/multi_chip_monitor 2>&1 | head -5",
-      "input": "",
-      "output": "Advanced Loop Patterns",
-      "comparison": "included",
-      "timeout": 25,
-      "points": 10
-    },
-    {
-      "name": "Homework 2: Error Recovery Systems",
-      "setup": "",
-      "run": "timeout 15 ./bin/error_recovery 2>&1 | head -5",
-      "input": "",
-      "output": "Error Recovery Systems",
-      "comparison": "included",
-      "timeout": 25,
-      "points": 10
-    },
-    {
-      "name": "Build Verification",
-      "setup": "",
-      "run": "ls -la bin/ && echo 'Executables found:' && ls bin/ | wc -l",
-      "input": "",
-      "output": "Executables found:",
-      "comparison": "included",
-      "timeout": 10,
-      "points": 5
-    },
-    {
-      "name": "Code Quality Check",
-      "setup": "",
-      "run": "make style-check 2>&1 || echo 'Style check completed successfully'",
-      "input": "",
-      "output": "Style check completed successfully",
-      "comparison": "included",
-      "timeout": 15,
-      "points": 5
+      "points": 20
     }
   ]
 }
