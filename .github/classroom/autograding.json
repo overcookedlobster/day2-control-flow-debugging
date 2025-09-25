@@ -13,9 +13,9 @@
     {
       "name": "Task 1: Conditional Logic Implementation",
       "setup": "",
-      "run": "timeout 10 ./bin/register_monitor 2>&1 | grep -E '(Voltage.*PASS|Temperature.*PASS)' | wc -l",
+      "run": "timeout 10 ./bin/register_monitor 2>&1 | grep -A 25 'Task 1: Conditional Validation Logic' | grep -E '(PASS.*Voltage|PASS.*Temperature|Voltage.*PASS|Temperature.*PASS)' | wc -l",
       "input": "",
-      "output": "6",
+      "output": "8",
       "comparison": "exact",
       "timeout": 20,
       "points": 20

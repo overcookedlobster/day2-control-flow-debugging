@@ -40,10 +40,14 @@
  * - Use printf with format: "PASS: Voltage within range: %.2fV\n"
  */
 bool validate_voltage_range(float voltage) {
-    // TODO: Your implementation here
-    // Hint: Use if-else statements to check MIN_VOLTAGE and MAX_VOLTAGE constants
-    (void)voltage; // Suppress unused parameter warning
-    return false; // Replace this line
+    if (voltage >= MIN_VOLTAGE && voltage <= MAX_VOLTAGE) {
+        printf("PASS: Voltage within range: %.2fV\n", voltage);
+        return true;
+    } else {
+        printf("FAIL: Voltage out of range: %.2fV (expected %.2f-%.2fV)\n",
+               voltage, MIN_VOLTAGE, MAX_VOLTAGE);
+        return false;
+    }
 }
 
 /**
@@ -58,10 +62,18 @@ bool validate_voltage_range(float voltage) {
  * - Use appropriate printf formats for each case
  */
 bool validate_temperature_range(float temperature) {
-    // TODO: Your implementation here
-    // Hint: Use nested if-else to handle critical, warning, and normal ranges
-    (void)temperature; // Suppress unused parameter warning
-    return false; // Replace this line
+    if (temperature > TEMP_CRITICAL) {
+        printf("FAIL: Temperature critical: %.1f°C (max %.1f°C)\n",
+               temperature, TEMP_CRITICAL);
+        return false;
+    } else if (temperature > TEMP_WARNING) {
+        printf("PASS: Temperature warning: %.1f°C (warning threshold %.1f°C)\n",
+               temperature, TEMP_WARNING);
+        return true;
+    } else {
+        printf("PASS: Temperature normal: %.1f°C\n", temperature);
+        return true;
+    }
 }
 
 /**
@@ -80,10 +92,24 @@ bool validate_temperature_range(float temperature) {
  * - Print status determination message with all three values
  */
 system_status_t determine_system_status(float voltage, float temperature, float current) {
-    // TODO: Your implementation here
-    // Hint: Call the validation functions and use logical operators
-    (void)voltage; (void)temperature; (void)current; // Suppress unused parameter warnings
-    return STATUS_CRITICAL; // Replace this line
+    bool voltage_ok = validate_voltage_range(voltage);
+    bool temp_ok = validate_temperature_range(temperature);
+    bool current_ok = (current >= MIN_CURRENT && current <= MAX_CURRENT);
+
+    if (current_ok) {
+        printf("PASS: Current within range: %.2fA\n", current);
+    } else {
+        printf("FAIL: Current out of range: %.2fA (expected %.2f-%.2fA)\n",
+               current, MIN_CURRENT, MAX_CURRENT);
+    }
+
+    if (!voltage_ok || !temp_ok || !current_ok) {
+        return STATUS_CRITICAL;
+    } else if (temperature > TEMP_WARNING) {
+        return STATUS_WARNING;
+    } else {
+        return STATUS_NORMAL;
+    }
 }
 
 /**
